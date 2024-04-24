@@ -1,1 +1,44 @@
-Nothing here yet! But it's reserved for Xray configs, especially Fragment stuff
+
+
+        "sockopt": {
+          "TcpNoDelay": true,
+          "tcpKeepAliveIdle": 100,
+          "mark": 255
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      }
+    }
+  ],
+  "stats": {},
+  "api": {
+    "tag": "api",
+    "services": [
+      "StatsService"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api"
+      }
+    ]
+  }
+}
