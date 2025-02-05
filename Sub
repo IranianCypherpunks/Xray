@@ -286,5 +286,136 @@
             }
         ]
     }
+},
+{
+    "dns": {
+        "servers": [
+            "8.8.8.8"
+        ]
+    },
+    "inbounds": [
+        {
+            "listen": "127.0.0.1",
+            "port": 10808,
+            "protocol": "socks",
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "userLevel": 8
+            },
+            "sniffing": {
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "enabled": true,
+                "routeOnly": true
+            },
+            "tag": "socks"
+        }
+    ],
+    "log": {
+        "loglevel": "none"
+    },
+    "outbounds": [
+        {
+            "protocol" : "vless",
+            "settings" : {
+              "vnext" : [
+                {
+                  "address" : "mods.lnmarketplace.net",
+                  "port" : 443,
+                  "users" : [
+                    {
+                      "encryption" : "none",
+                      "flow" : "xtls-rprx-vision",
+                      "id" : "9e55e24c-8de9-4357-8a37-9cf1212c6491"
+                    }
+                  ]
+                }
+              ]
+            },
+            "streamSettings" : {
+              "network" : "tcp",
+              "security" : "tls",
+              "tcpSettings" : {
+      
+              },
+              "tlsSettings" : {
+                "allowInsecure" : false,
+                "alpn" : [
+                  "h2"
+                ],
+                "fingerprint" : "randomized",
+                "serverName" : "mods.lnmarketplace.net"
+              }
+            },
+            "tag" : "proxy"
+          },
+        {
+            "protocol": "freedom",
+            "settings": {
+                "domainStrategy": "UseIP"
+            },
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            },
+            "tag": "block"
+        }
+    ],
+    "policy": {
+        "levels": {
+            "8": {
+                "connIdle": 300,
+                "downlinkOnly": 1,
+                "handshake": 4,
+                "uplinkOnly": 1
+            }
+        },
+        "system": {
+            "statsOutboundUplink": true,
+            "statsOutboundDownlink": true
+        }
+    },
+    "remarks": "🇩🇪 IRCP | @ln2ray",
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "network": "udp",
+                "outboundTag": "block",
+                "port": "443",
+                "type": "field"
+            },
+            {
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "direct",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "geosite:private"
+                ],
+                "outboundTag": "direct",
+                "type": "field"
+            },
+            {
+                "domain": [
+                    "regexp:.*\\.ir$",
+                    "regexp:.*\\.xn--mgba3a4f16a$"
+                ],
+                "outboundTag": "direct",
+                "type": "field"
+            }
+        ]
+    }
 }
 ]
