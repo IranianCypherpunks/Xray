@@ -93,10 +93,8 @@
                     "xhttpSettings": {
                         "path": "/kavir",
                         "mode": "stream-one",
-                        "#xmux": {
-                            "maxConcurrency": 8,
-                            "hMaxRequestTimes": 1000,
-                            "hMaxReusableSecs": 3600
+                        "xmux": {
+                            "maxConcurrency": 8
                         },
                         "#downloadSettings": {
                             "address": "kavir.lnmarketplace.net",
@@ -247,7 +245,7 @@
                             "network": "xhttp",
                             "xhttpSettings": {
                                 "path": "/kavir",
-                                "#xmux": {
+                                "xmux": {
                                     "maxConcurrency": 8,
                                     "hMaxRequestTimes": 1000,
                                     "hMaxReusableSecs": 3600
